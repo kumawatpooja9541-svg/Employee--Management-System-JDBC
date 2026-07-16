@@ -17,7 +17,8 @@ public class Main {
             System.out.println("2. View Employees");
             System.out.println("3. Update Employee");
             System.out.println("4. Delete Employee");
-            System.out.println("5. Exit");
+            System.out.println("5. Search Employee");
+            System.out.println("6. Exit");
 
             System.out.println("Enter your choice: ");
             int choice = sc.nextInt();
@@ -58,11 +59,17 @@ public class Main {
                     int deleteId = sc.nextInt();
                     dao.deleteEmployee(deleteId);
                     break;
+
                 case 5:
-                    System.out.println("Thank You!");
+                    System.out.print("Enter Employee ID : ");
+                    int searchId = sc.nextInt();
+                    dao.searchEmployee(searchId);
+
+                    break;
+                case 6:
+                    System.out.println("Thank You! Exiting Program...");
                     sc.close();
                     return;
-
                 default:
                     System.out.println("Invalid Choice");
                     break;

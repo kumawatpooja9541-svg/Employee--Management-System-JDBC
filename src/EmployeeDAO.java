@@ -40,9 +40,7 @@ public class EmployeeDAO {
             }
         }
 
-
     }
-
 
     // View Employee
     public void viewEmployee() {
@@ -57,7 +55,7 @@ public class EmployeeDAO {
             ps = con.prepareStatement(
                     "SELECT * FROM employee"
             );
-      rs = ps.executeQuery();
+            rs = ps.executeQuery();
             System.out.println("----------------------------------------");
             System.out.printf("%-8s %-15s %s%n", "ID", "NAME", "SALARY");
             System.out.println("----------------------------------------");
@@ -99,7 +97,7 @@ public class EmployeeDAO {
     }
 
     // Update Employee
-    public void updateEmployee(Employee employee)  {
+    public void updateEmployee(Employee employee) {
         Connection con = null;
         PreparedStatement ps = null;
         try {
@@ -123,9 +121,7 @@ public class EmployeeDAO {
 
             System.out.println("Database operation failed!");
             System.out.println(e.getMessage());
-        }
-
-        finally {
+        } finally {
             try {
                 if (ps != null)
                     ps.close();
@@ -139,6 +135,7 @@ public class EmployeeDAO {
         }
 
     }
+
     // Delete Employee
     public void deleteEmployee(int id) {
 
@@ -174,13 +171,70 @@ public class EmployeeDAO {
             }
 
         }
+    }
+
+    public void searchEmployee(int id) {
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = DatabaseConnection.getConnection();
+            ps = con.prepareStatement(
+                    "SELECT * FROM employee WHERE id=?"
+            );
+
+            ps.setInt(1, id);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Employee emp = new Employee(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDouble("salary")
+                );
+
+                System.out.println("ID : " + emp.getId());
+                System.out.println("Name : " + emp.getName());
+                System.out.println("Salary : " + emp.getSalary());
+
+            } else {
+                System.out.println("Employee Not Found!");
+            }
+        } catch (SQLException e) {
+            System.out.println("Database operation failed!");
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (ps != null)
+                    ps.close();
+
+                if (con != null)
+                    con.close();
+
+                if (rs != null)
+                    rs.close();
+
+            } catch (SQLException ex) {
+
+                System.out.println("Error while closing resources.");
+            }
 
 
         }
 
 
+    }
 
-        }
+
+}
+
+
+
+
+
+
 
 
 
