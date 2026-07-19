@@ -104,11 +104,12 @@ public class EmployeeDAO {
 
             con = DatabaseConnection.getConnection();
             ps = con.prepareStatement(
-                    "UPDATE employee SET salary=? WHERE id=?"
+                    "UPDATE employee SET name=?,salary=? WHERE id=?"
             );
 
-            ps.setDouble(1, employee.getSalary());
-            ps.setInt(2, employee.getId());
+            ps.setString(1, employee.getName());
+            ps.setDouble(2, employee.getSalary());
+            ps.setInt(3, employee.getId());
 
             int rows = ps.executeUpdate();
 
